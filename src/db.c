@@ -276,12 +276,16 @@ void signalFlushedDb(int dbid) {
  *----------------------------------------------------------------------------*/
 
 void flushdbCommand(redisClient *c) {
+  if (c->db->id == 0) {
+    addReplyError(c,"cannot flush db 0");
+  } else {
     server.dirty += dictSize(c->db->dict);
     signalFlushedDb(c->db->id);
     dictEmpty(c->db->dict,NULL);
     dictEmpty(c->db->expires,NULL);
     if (server.cluster_enabled) slotToKeyFlush();
     addReply(c,shared.ok);
+  }
 }
 
 void flushallCommand(redisClient *c) {
