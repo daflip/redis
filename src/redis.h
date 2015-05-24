@@ -342,6 +342,7 @@ typedef long long mstime_t; /* millisecond time type. */
 #define REDIS_MAXMEMORY_ALLKEYS_RANDOM 4
 #define REDIS_MAXMEMORY_NO_EVICTION 5
 #define REDIS_DEFAULT_MAXMEMORY_POLICY REDIS_MAXMEMORY_NO_EVICTION
+#define REDIS_MAXMEMORY_NON_ZERO_DB_ONLY 6
 
 /* Scripting */
 #define REDIS_LUA_TIME_LIMIT 5000 /* milliseconds */

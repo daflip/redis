@@ -231,6 +231,8 @@ void loadServerConfigFromString(char *config) {
                 server.maxmemory_policy = REDIS_MAXMEMORY_VOLATILE_LRU;
             } else if (!strcasecmp(argv[1],"volatile-random")) {
                 server.maxmemory_policy = REDIS_MAXMEMORY_VOLATILE_RANDOM;
+            } else if (!strcasecmp(argv[1],"non-zero-db")) {
+                server.maxmemory_policy = REDIS_MAXMEMORY_NON_ZERO_DB_ONLY;
             } else if (!strcasecmp(argv[1],"volatile-ttl")) {
                 server.maxmemory_policy = REDIS_MAXMEMORY_VOLATILE_TTL;
             } else if (!strcasecmp(argv[1],"allkeys-lru")) {
@@ -1833,6 +1835,7 @@ int rewriteConfig(char *path) {
         "allkeys-lru", REDIS_MAXMEMORY_ALLKEYS_LRU,
         "volatile-random", REDIS_MAXMEMORY_VOLATILE_RANDOM,
         "allkeys-random", REDIS_MAXMEMORY_ALLKEYS_RANDOM,
+        "non-zero-db", REDIS_MAXMEMORY_NON_ZERO_DB_ONLY,
         "volatile-ttl", REDIS_MAXMEMORY_VOLATILE_TTL,
         "noeviction", REDIS_MAXMEMORY_NO_EVICTION,
         NULL, REDIS_DEFAULT_MAXMEMORY_POLICY);

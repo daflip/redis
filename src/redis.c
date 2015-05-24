@@ -3223,7 +3223,7 @@ int freeMemoryIfNeeded(void) {
     while (mem_freed < mem_tofree) {
         int j, k, keys_freed = 0;
 
-        for (j = 0; j < server.dbnum; j++) {
+        for (j = 1; j < server.dbnum; j++) {
             long bestval = 0; /* just to prevent warning */
             sds bestkey = NULL;
             dictEntry *de;
@@ -3231,6 +3231,7 @@ int freeMemoryIfNeeded(void) {
             dict *dict;
 
             if (server.maxmemory_policy == REDIS_MAXMEMORY_ALLKEYS_LRU ||
+                server.maxmemory_policy == REDIS_MAXMEMORY_NON_ZERO_DB_ONLY ||
                 server.maxmemory_policy == REDIS_MAXMEMORY_ALLKEYS_RANDOM)
             {
                 dict = server.db[j].dict;
@@ -3241,6 +3242,7 @@ int freeMemoryIfNeeded(void) {
 
             /* volatile-random and allkeys-random policy */
             if (server.maxmemory_policy == REDIS_MAXMEMORY_ALLKEYS_RANDOM ||
+                server.maxmemory_policy == REDIS_MAXMEMORY_NON_ZERO_DB_ONLY ||
                 server.maxmemory_policy == REDIS_MAXMEMORY_VOLATILE_RANDOM)
             {
                 de = dictGetRandomKey(dict);
